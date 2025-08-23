@@ -29,12 +29,12 @@ const menuOptions = [
 ]
 const AppHeader = () => {
   return (
-    <div className='flex items-center justify-between p-4 shadow'>
+    <div className='flex items-center justify-between p-4 shadow px-10 md:px-20 lg:px-40 '>
         <Image src={"/logo.svg"} alt='logo' width={120} height={60}></Image>
         <div className='hidden md:flex gap-5  items-center '>
             {menuOptions.map((options , index)=>(
                 <div key={index}>
-                    <h1>{options.name}</h1>
+                    <h1 className='hover:font-bold cursor-pointer transition-all'>{options.name}</h1>
                 </div>
             ))}
         </div>
