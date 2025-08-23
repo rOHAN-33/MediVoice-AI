@@ -1,5 +1,6 @@
 "use client"
 import React ,{useState}from 'react'
+import axios from 'axios'
 import {
   Dialog,
   DialogClose,
@@ -15,6 +16,19 @@ import { Textarea } from '@/components/ui/textarea'
 import { ArrowRight } from 'lucide-react'
 const AddNewSession = () => {
     const[note,setNote]  = useState <string>('');
+    const[loading,setLoading] = useState <boolean>(false);
+    const OnClickNext = async () => {
+  try {
+    setLoading(true);
+    const result = await axios.post('/api/suggest-doctors', { notes: note });
+    console.log(result.data);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -38,7 +52,13 @@ const AddNewSession = () => {
                 <Button variant={"outline"}>Cancel</Button>
             </DialogClose>
             
-            <Button disabled={!note}>Start Consultation <ArrowRight></ArrowRight></Button>
+            <Button 
+  disabled={!note || loading} 
+  onClick={OnClickNext}
+>
+  {loading ? "Starting..." : "Start Consultation"} <ArrowRight />
+</Button>
+
         </DialogFooter>
         {/* Your form or dialog contents */}
       </DialogContent>
